@@ -3,7 +3,6 @@ const query = require('../mysql/mysql');
 
 exports.createPost = async (data) => {
   const value = Object.values(data);
-  console.log(value);
   const sql = `INSERT INTO posts(name, description) VALUES(?,?)`
   return await query(sql, value, data);
 }

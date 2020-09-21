@@ -3,6 +3,7 @@ const query = require("../mysql/mysql");
 const {
   createToken
 } = require('../utils/auth');
+const AppError = require('../utils/AppError')
 
 const correctPassword = async (candidatePassword, userPassword) => {
   return await bcrypt.compare(candidatePassword, userPassword);
@@ -21,7 +22,7 @@ exports.login = async (user) => {
   const checkPassword = await correctPassword(user.password, result[0].pass);
   const token = await createToken(result[0].id);
   if (checkPassword) return token;
-  return "Error correct password";
+  return new AppError('Incorrect password');
 };
 
 exports.findUser = async (id) => {
